@@ -36,6 +36,7 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
     }
 }
 
@@ -129,5 +130,14 @@ dependencies {
     implementation("androidx.camera:camera-view:$cameraxVersion")
 
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
+
+    // 👇 AndroidViewBinding 제공
+    implementation("androidx.compose.ui:ui-viewbinding")
+
+    // XML에서 사용한 ConstraintLayout
+    implementation("androidx.constraintlayout:constraintlayout:2.2.0")
+
+    // XML에서 사용한 Material 위젯(TextInputLayout, MaterialButton 등)
+    implementation("com.google.android.material:material:1.12.0")
 
 }
