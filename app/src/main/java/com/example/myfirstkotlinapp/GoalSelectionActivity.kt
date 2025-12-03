@@ -69,8 +69,7 @@ fun GoalSelectionXmlScreen(
         fun handleClick(goalString: String) {
             coroutineScope.launch {
                 try {
-                    // ✅ 여기서 userId + goalString 을 ExerciseApi 로 전송
-                    val response = RetrofitClient.exerciseApi.setGoal(
+                    val response = RetrofitClient.authApi.patchGoal(
                         userId = userId,
                         goal = goalString
                     )
