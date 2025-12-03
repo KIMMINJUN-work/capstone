@@ -16,7 +16,7 @@ import com.example.myfirstkotlinapp.network.RetrofitClient
 import kotlinx.coroutines.launch
 import android.content.Intent
 
-class GoalStateActivity : ComponentActivity() {
+class GoalSettingActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,14 +34,11 @@ class GoalStateActivity : ComponentActivity() {
             MyFirstKotlinAppTheme {
                 GoalStateScreen(
                     userId = userId,
-                    onUpdateSuccess = {
+                    onUpdateSuccess = { userId ->
                         // ✅ 서버 저장 성공 후 홈(MainActivity)으로 이동
-                        val intent = Intent(this@GoalStateActivity, MainActivity::class.java)
-                        intent.addFlags(
-                            Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-                        )
+                        val intent = Intent(this@GoalSettingActivity, MainActivity::class.java)
+                        intent.putExtra("userId", userId)
                         startActivity(intent)
-
                         // 현재 화면은 스택에서 제거
                         finish()
                     }
@@ -56,7 +53,6 @@ fun GoalSettingXmlScreen(
     onBack: () -> Unit,
     onNext: (height: String, weight: String, bodyFat: String) -> Unit
 ) {
-    val context = LocalContext.current  // 필요하면 Toast, Intent 등에 사용 가능
 
     AndroidViewBinding(ActivityGoalSettingBinding::inflate) {
         // this = ActivityGoalSettingBinding
@@ -81,7 +77,7 @@ fun GoalSettingXmlScreen(
 @Composable
 fun GoalStateScreen(
     userId: Int,
-    onUpdateSuccess: () -> Unit
+    onUpdateSuccess: (Int) -> Unit
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -115,7 +111,7 @@ fun GoalStateScreen(
 
                     if (response.isSuccessful) {
                         Toast.makeText(context, "목표 상태가 저장되었습니다.", Toast.LENGTH_SHORT).show()
-                        onUpdateSuccess()
+                        onUpdateSuccess(userId)
                     } else {
                         Toast.makeText(
                             context,

@@ -37,7 +37,7 @@ class GoalSelectionActivity : ComponentActivity() {
                         //    다음 화면 이름은 팀에서 정한 Activity 로 교체
                         val next = Intent(
                             this@GoalSelectionActivity,
-                            CurrentStatusActivity::class.java   // TODO: 실제 액티비티 이름으로 변경
+                            GoalSettingActivity::class.java
                         )
                         next.putExtra("userId", userId)
                         // 굳이 goal 이나 userId 를 들고 다닐 필요 없으면 extra 안 넣어도 됨
